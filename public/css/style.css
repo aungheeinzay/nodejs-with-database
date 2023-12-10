@@ -1,0 +1,80 @@
+.titles{
+    text-align: center;
+    text-transform: uppercase;
+}
+.addpost,.btn{
+    display: block;
+    padding: 10px 20px;
+    width: 150px;
+    text-decoration: none;
+    color: #fff;
+    background-color: black;
+    border-radius: 5px;
+    text-align: center;
+}
+.formbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.filldata{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.filldata label{
+   
+    display: block;
+    width: 100px;
+    height: 30px;
+    font-size: 20px;
+    margin-right: 10px;
+}
+.filldata input{
+    width: 300px;
+    height: 30px;
+    border-radius: 8px;
+}
+.filldata textarea{
+    width: 300px;
+    border-radius: 8px;
+}
+.formbox button{
+    display: block;
+    width: 410px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+}
+.backhome{
+    display: block;
+    width: 100px;
+    height: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    margin: 40px;
+    text-decoration: none;
+}
+.card{
+    border: 1px solid #2e2e2e;
+    background-color: #494949;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 10px;
+    margin: 20px 10px;
+
+}
+.post_title{
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
