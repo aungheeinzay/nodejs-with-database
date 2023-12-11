@@ -1,16 +1,18 @@
-const db =require("../utils/database");
-module.exports= class post{
-    constructor(title,description){
-        this.title = title,
-        this.description =description
+const Sequlize = require("sequelize");
+const sequlize = require("../utils/database");
+const post =sequlize.define("post",{
+    id : {type: Sequlize.INTEGER,
+        autoIncrement : true,
+        allowNull : false,
+        primaryKey : true
+    },
+    title : {
+        type : Sequlize.STRING,
+        allowNull : false
+    },
+    description : {
+        type : Sequlize.STRING,
+        allowNull : false
     }
-    setpsot(){
-        return db.execute("INSERT INTO posts (title,description) VALUES (?,?)",[this.title,this.description]);
-    }
-    static getallposts(){
-        return db.execute("SELECT * FROM posts");
-    }
-    static getSinglePost(id){
-        return db.execute("SELECT * FROM posts WHERE posts.id = ?",[id]);
-    }
-}
+});
+module.exports = post;

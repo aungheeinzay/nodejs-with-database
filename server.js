@@ -1,6 +1,7 @@
 const express =require("express");
 const path = require("path");
 const bp = require("body-parser");
+const db = require("./utils/database.js");
 const app = express();
 app.set("view engine","ejs");
 app.set("views","views");
@@ -24,4 +25,7 @@ app.use("/admin",(req,res,next)=>{
 });
 app.use(postrouter);
 app.use("/admin",adminrouter);
-app.listen(1000);
+db.sync().then((result)=>{
+    console.log(result);
+    app.listen(1000);
+}).catch(err=>{console.log(err);})
