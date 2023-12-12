@@ -2,7 +2,7 @@
     text-align: center;
     text-transform: uppercase;
 }
-.addpost,.btn{
+.addpost,.btn,.delete{
     display: block;
     padding: 10px 20px;
     width: 150px;
@@ -77,4 +77,17 @@
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 3px;
+}
+.delete,.edit_btn{
+    display: block;
+    height: 40px;
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+    background-color: black;
+    border-radius: 5px;
+    text-align: center;
+}
+.delete_form,.edit{
+    margin: 10px;
 }

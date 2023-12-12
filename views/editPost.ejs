@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<link rel="stylesheet" href="/css/style.css">
+<body>
+    <h1 class="titles">EDIT YOUR POST</h1>
+    <form action="/admin/post_edit/" method="post" class="formbox">
+        <input type="text" name="postid" value="<%= post.id %>" hidden>
+        <div class="filldata">
+    <label for="title">Title</label>
+        <input  id="title" type="text" name="title" value="<%= post.title %>">
+    </div>
+<div class="filldata">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" cols="30" rows="10"><%= post.description %></textarea>
+    </div>
+    <div class="filldata">
+        <label for="photo">photo</label>
+        <input  id="photo" type="file" name="photo">
+    </div>
+        <button>update post</button>
+    </form>
+    <a href="/" class="backhome">back home</a>
+</body>
+</html>

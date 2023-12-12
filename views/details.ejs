@@ -9,5 +9,14 @@
         <hr>
         <p><%= post.description %></p>
     </div>
+    <hr>
+    <form action="/admin/post/<%= post.id %>" method="post" class="delete_form">
+        <button  class="delete">Delete</button>
+    </form>
+    <div class="edit">
+        <a href="/admin/post_edit/<%= post.id %>" class="edit_btn">Edit</a>
+    </div>
+    
+    
 </body>
 <%- include("./include/foot") %>
