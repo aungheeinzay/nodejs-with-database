@@ -6,6 +6,9 @@ app.set("view engine","ejs");
 app.set("views","views");
 const postrouter = require("./routes/posts.js");
 const adminrouter=require("./routes/admin.js");
+
+const mongodb = require("./utils/database.js");
+
 app.use(express.static(path.join(__dirname,"public")));
 app.use(express.json());
 
@@ -24,4 +27,6 @@ app.use("/admin",(req,res,next)=>{
 });
 app.use(postrouter);
 app.use("/admin",adminrouter);
+
+mongodb();
 app.listen(1000);
