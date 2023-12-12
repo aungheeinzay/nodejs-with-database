@@ -3,11 +3,17 @@ const Post =require("../models/posts");
 // const posts=[];
 
 exports.createpost = (req,res)=>{
-    const {title,description,photo} = req.body;
-    Post.create({
+    const {title,description} = req.body;
+    // Post.create({
+    //     title,
+    //     description,
+    //     userId :req.user.id
+    // })
+    req.user.createPost({
         title,
         description
-    }).then((result)=>{
+    })
+    .then((result)=>{
         console.log(result);
         res.redirect("/");
     }).catch((err)=>console.log(err));
@@ -53,6 +59,7 @@ exports.oldData = (req,res)=>{
         res.render("editPost",{title : `${post.title}`,post})
     }).catch(err=>console.log(err));
 }
+
 exports.updatepost = (req,res)=>{
     const {postid,title,description}=req.body;
     Post.findByPk(postid).then((updatePost)=>{
