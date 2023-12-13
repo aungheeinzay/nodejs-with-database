@@ -1,35 +1,32 @@
-const post =require("../models/posts");
-const posts=[];
+
+const Post =require("../models/posts");
+
 
 exports.createpost = (req,res)=>{
     const {title,description,photo} = req.body;
-    console.log(`title value is ${title} and description values is ${description}`);
-    posts.push(
-        {
-            id:Math.random(),
-            title,
-            description,
-            photo
-        }
-    )
+    const post =new Post(title,description);
+    post.create().then((result)=>{
+        console.log(result);
+        res.redirect("/");
+    }).catch(err=>console.log(err))
 
-    res.redirect("/"); 
 }
 exports.rendercreatepage = (req,res)=>{
     res.render("addpost",{title:"post create mal"});
 }
 exports.renderhomepage=(req,res)=>{
-    // console.log(posts);
-    // res.sendFile(path.join(__dirname,"..","views","homepage.html"));
- 
+    Post.getallposts().then((posts)=>{
         res.render("home",{title:"hello word",postarr:posts});
+    }).catch(err=>console.log(err));
+        
    
  };
  exports.renderdetials=(req,res)=>{
-    const postid =Number(req.params.postId);
-    const post = posts.find((post)=>post.id===postid)
-    console.log(post);
+    const postid =req.params.postId;
+    Post.getpost(postid).then((post)=>{
+          res.render("details",{title:`${post.title}`,post});
+    }).catch(err=>console.log(err))
     
-        res.render("details",{title:"details page",post});
+        
     
  }
