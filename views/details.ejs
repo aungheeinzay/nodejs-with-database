@@ -11,8 +11,11 @@
     </div>
     <hr>
     <div class="mgbtncontainer">
-        <button class="mgbtn">delete</button>
-        <button class="mgbtn">edit</button>
+        <form  class="dform" method="post" action="/admin/post/<%= post._id %>">
+          <button  class=" delete"> delete</button>
+        </form>
+       
+        <a href="/admin/updatepost/<%= post._id %>" class="mgbtn">edit</a>
     </div>
    
 </body>

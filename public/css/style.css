@@ -88,9 +88,25 @@
 .mgbtn{
     display: block;
     width: 100%;
-    margin: 10px;
+    margin: 10px 20px;
     cursor: pointer;
     background-color: #2e2e2e;
     color: #fff;
     padding: 10px 0px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.dform{
+    width: 100%;
+}
+.delete{
+    display: block;
+    background-color: #2e2e2e;
+    color: white;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px 20px;
 }
