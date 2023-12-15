@@ -6,7 +6,8 @@ exports.createpost = (req,res)=>{
     const {title,description,photo} = req.body;
     Post.create({
         title,
-        description
+        description,
+        userId : req.user
     }).then(
         (result)=>{
             console.log(result);
@@ -18,7 +19,9 @@ exports.rendercreatepage = (req,res)=>{
     res.render("addpost",{title:"post create mal"});
 }
 exports.renderhomepage=(req,res)=>{
-    Post.find().sort({title: -1}).then((posts)=>{
+    Post.find().select("title")
+    .populate("userId", "username").sort({title: -1}).then((posts)=>{
+        console.log(posts);
         res.render("home",{title:"hello word",postarr:posts});
     }).catch(err=>console.log(err));
         

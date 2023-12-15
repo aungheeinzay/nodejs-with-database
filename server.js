@@ -8,7 +8,7 @@ app.set("view engine","ejs");
 app.set("views","views");
 const postrouter = require("./routes/posts.js");
 const adminrouter=require("./routes/admin.js");
-
+const User =require("./models/user.js");
 
 
 app.use(express.static(path.join(__dirname,"public")));
@@ -27,10 +27,25 @@ app.use("/admin",(req,res,next)=>{
     console.log(" i am admin middleware ");
     next();
 });
+app.use((req,res,next)=>{
+    User.findById("657c6876330844364cf279fc").then((user)=>{
+        req.user= user;
+        next();
+    })
+})
 app.use(postrouter);
 app.use("/admin",adminrouter);
 
-mongoose.connect(process.env.MONGODB_URL).then(result=>{
-    console.log(result);
+mongoose.connect(process.env.MONGODB_URL).then(()=>{
+    console.log("connected to mongoose");
     app.listen(1000);
+    User.findOne().then((user)=>{
+        if(!user){
+           return User.create({
+                username : "Aung heein",
+                email: "aunghz@gmail.com",
+                password: "asdfgh"});
+        }
+        return user;
+    }).then(result=>console.log(result))
 }).catch(err=>console.log(err));
