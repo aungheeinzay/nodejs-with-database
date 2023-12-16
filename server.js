@@ -3,6 +3,9 @@ const path = require("path");
 const bp = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv =require("dotenv").config();
+const session = require("express-session");
+const mongostore = require("connect-mongodb-session")(session);
+
 const app = express();
 app.set("view engine","ejs");
 app.set("views","views");
@@ -28,6 +31,18 @@ app.use("/admin",(req,res,next)=>{
     console.log(" i am admin middleware ");
     next();
 });
+
+const store = new mongostore({
+    uri:process.env.MONGODB_URI,
+    collection:"session",
+})
+
+app.use(session({
+    secret :process.env.SESSION_KEY,
+    resave :false,
+    saveUninitialized :false,
+    store
+}));
 app.use((req,res,next)=>{
     User.findById("657c6876330844364cf279fc").then((user)=>{
         req.user= user;
