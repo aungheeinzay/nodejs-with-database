@@ -2,7 +2,11 @@
 <body>
     <h1 class="titles"> i am home page</h1>
     <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt velit voluptatum, numquam ab perspiciatis sequi? Totam ab nulla odit ad dolorum laudantium sint aperiam expedita cumque vel, officiis nostrum hic!</p>
-    <a href="/admin/createpost" class="addpost">Add post</a>
+    <% if(islogin){ %>
+        <a href="/admin/createpost" class="addpost">Add post</a>
+    <% } else {%>
+    <a href="/login" class="addpost">create account</a>
+    <% } %>
     <hr>
     <h1 class="titles">recent posts</h1>
     <% if(postarr.length==0) {%>
