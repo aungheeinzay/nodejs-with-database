@@ -7,7 +7,7 @@ exports.createpost = (req,res)=>{
     Post.create({
         title,
         description,
-        userId : req.user
+        // userId : req.user
     }).then(
         (result)=>{
             console.log(result);
@@ -22,7 +22,7 @@ exports.renderhomepage=(req,res)=>{
 //    const cookie = req.get("Cookie").split("=")[1].trim()==="true";
 //    console.log(cookie);
     Post.find().select("title")
-    .populate("userId", "username").sort({title: -1}).then((posts)=>{
+    .populate("userId", "email").sort({title: -1}).then((posts)=>{
         console.log(posts);
         res.render("home",{title:"hello word",postarr:posts,islogin:req.session.islogin ? true : false});
     }).catch(err=>console.log(err));

@@ -9,7 +9,9 @@
         </form>
 
     <% } else {%>
-    <a href="/login" class="addpost">create account</a>
+    <a href="/login" class="addpost">login account</a>
+    <a href="/register" class="addpost">register account</a>
+    
     <% } %>
     <hr>
     <h1 class="titles">recent posts</h1>
@@ -18,7 +20,7 @@
     <%}%>
     <% for(let post of postarr) { %>
     <div class="card">
-        <h2>Post by@ <%= post.userId.username %></h2>
+        
         <h3 class="post_title"><%= post.title %></h3>
         <hr>
         <a href="/post/<%= post._id %>" class="btn">seemore</a>
