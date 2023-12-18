@@ -9,6 +9,7 @@
 <body>
     <h1 class="titles">CREATE A NEW ACCOUNT</h1>
     <form action="/register" method="post" class="formbox">
+        <input hidden value="<%= csrfToken %>" name="_csrf">
         <div class="filldata">
     <label for="email">email</label>
         <input  id="email" type="text" name="email">

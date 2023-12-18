@@ -9,6 +9,7 @@
 <body>
     <h1 class="titles">ADD A NEW POST</h1>
     <form action="/admin" method="post" class="formbox">
+        <input hidden value="<%= csrfToken %>" name="_csrf">
         <div class="filldata">
     <label for="title">Title</label>
         <input  id="title" type="text" name="title">

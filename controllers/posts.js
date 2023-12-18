@@ -3,11 +3,11 @@ const Post =require("../models/posts");
 
 
 exports.createpost = (req,res)=>{
-    const {title,description,photo} = req.body;
+    const {title,description,userId} = req.body;
     Post.create({
         title,
         description,
-        // userId : req.user
+        userId : req.user
     }).then(
         (result)=>{
             console.log(result);
@@ -24,7 +24,10 @@ exports.renderhomepage=(req,res)=>{
     Post.find().select("title")
     .populate("userId", "email").sort({title: -1}).then((posts)=>{
         console.log(posts);
-        res.render("home",{title:"hello word",postarr:posts,islogin:req.session.islogin ? true : false});
+        res.render("home",{
+            title:"hello word",
+            postarr:posts,
+        });
     }).catch(err=>console.log(err));
         
    

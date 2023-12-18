@@ -12,6 +12,7 @@
     <hr>
     <div class="mgbtncontainer">
         <form  class="dform" method="post" action="/admin/post/<%= post._id %>">
+            <input hidden value="<%= csrfToken %>" name="_csrf">
           <button  class=" delete"> delete</button>
         </form>
        
