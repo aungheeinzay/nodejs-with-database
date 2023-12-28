@@ -6,6 +6,7 @@ const dotenv =require("dotenv").config();
 const session = require("express-session");
 const mongostore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
+const flash = require("connect-flash")
 
 const app = express();
 app.set("view engine","ejs");
@@ -38,7 +39,7 @@ app.use(session({
 }));
 
 app.use(csrfProtact);
-
+app.use(flash());
 app.use((req,res,next)=>{
     if(req.session.islogin===undefined){
         return next();
@@ -64,5 +65,5 @@ app.use(authrouter);
 
 mongoose.connect(process.env.MONGODB_URL).then(()=>{
     console.log("connected to mongoose");
-    app.listen(1000);
+    app.listen(5500);
 }).catch(err=>console.log(err));

@@ -1,9 +1,14 @@
 
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
 .titles{
     text-align: center;
     text-transform: uppercase;
 }
-.addpost,.btn{
+.btn{
     display: block;
     padding: 10px 20px;
     width: 150px;
@@ -14,13 +19,30 @@
     text-align: center;
     margin:10px;
 }
+.btn:hover{
+    background-color: #161616;
+}
+.addpost{
+    display: block;
+    background: black;
+    width: 200px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
 
+}
+.addpost:hover{
+    background-color: #161616;
+}
 
 .formbox{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 .filldata{
     margin: 20px;
@@ -78,9 +100,7 @@
 
 }
 .post_title{
-    font-size: 20px;
     text-transform: uppercase;
-    letter-spacing: 3px;
 }
 .mgbtncontainer{
     display: flex;
@@ -117,4 +137,25 @@
 .logoutform{
     width: 190px;
     padding: 10px;
+}
+.errormsg{
+    text-align: center;
+    color: #fff;
+    width: 390px;
+    padding: 5px 10px;
+    background-color: #494949;
+    border-radius: 3px;
+}
+.forget{
+    margin:40px;
+    text-decoration: none;
+    font-size: medium;
+    color: rgb(41, 41, 255);
+    text-align: center;
+}
+@media(max-width:992px){
+    .addpost{
+        font-size: 15px;
+        width: 150px;
+    }
 }

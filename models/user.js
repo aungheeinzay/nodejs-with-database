@@ -9,6 +9,9 @@ const userSchema = new Schema({
     password:{
         type: String,
         unique:true,
-    }
+    },
+    resetToken:String,
+    tokenExpiration:Date
+    
 });
 module.exports = model("User",userSchema);

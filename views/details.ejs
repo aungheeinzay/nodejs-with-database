@@ -10,6 +10,7 @@
         <p><%= post.description %></p>
     </div>
     <hr>
+    <% if(currentUserId.toString() === post.userId.toString()) { %>
     <div class="mgbtncontainer">
         <form  class="dform" method="post" action="/admin/post/<%= post._id %>">
             <input hidden value="<%= csrfToken %>" name="_csrf">
@@ -18,6 +19,7 @@
        
         <a href="/admin/updatepost/<%= post._id %>" class="mgbtn">edit</a>
     </div>
+    <% } %>
    
 </body>
 <%- include("./include/foot") %>

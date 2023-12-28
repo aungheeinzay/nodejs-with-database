@@ -7,9 +7,9 @@
 </head>
 <link rel="stylesheet" href="/css/style.css">
 <body>
-    <h1 class="titles">LOGIN ACCOUNT</h1>
+    <h1 class="titles">reset</h1>
    
-    <form action="/login" method="post" class="formbox">
+    <form action="/resetPassword" method="post" class="formbox">
         <input hidden value="<%= csrfToken %>" name="_csrf">
 
         <% if(errormsg) { %>
@@ -21,16 +21,9 @@
     <label for="email">email</label>
         <input  id="email" type="text" name="email">
     </div>
-    <div class="filldata">
-        <label for="password">password
-        </label>
-            <input  id="psssword" type="text" name="password">
-        </div>
-        
-        <button>login</button>
+        <button>Reset password</button>
     </form>
-     <a href="/resetPassword" class="forget">Forget password</a>
-        <a href="/" class="backhome">back home</a>
+    <a href="/login" class="backhome">back login</a>
    
 </body>
 </html>

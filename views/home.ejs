@@ -1,33 +1,56 @@
 <%- include("./include/head") %>
 <body>
-    <h1 class="titles"> i am home page</h1>
-    <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt velit voluptatum, numquam ab perspiciatis sequi? Totam ab nulla odit ad dolorum laudantium sint aperiam expedita cumque vel, officiis nostrum hic!</p>
+    <h1 class="titles"> BLOG.io</h1>
+    <p class="text text-start p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt velit voluptatum, numquam ab perspiciatis sequi? Totam ab nulla odit ad dolorum laudantium sint aperiam expedita cumque vel, officiis nostrum hic!
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur eius assumenda error quae, quidem commodi, odit adipisci optio cumque voluptatum praesentium maiores eos dignissimos nulla? Odio ipsa modi consectetur id.
+        
+    </p>
+    <p class="h3"> <%= currentUserEmail %></p>
     <% if(islogin){ %>
-        <a href="/admin/createpost" class="addpost">Add post</a>
-        <form action="/logout" method="post" class="logoutform">
-           <input hidden value="<%= csrfToken %>" name="_csrf">
-            <button class="logout">logout</button>
-        </form>
-
-    <% } else {%>
-    <a href="/login" class="addpost">login account</a>
-    <a href="/register" class="addpost">register account</a>
-    
+        <div class="d-flex justify-content-center">
+                <div class="m-3 mt-4">
+                    <a href="/admin/createpost" class="addpost ">Add post</a>
+                </div>
+            <form action="/logout" method="post" class="logoutform m-3">
+                <input hidden value="<%= csrfToken %>" name="_csrf">
+                 <button class="logout">logout</button>
+             </form>
+        </div>
+<% } else {%>
+   <div class="d-flex justify-content-center">
+                <a href="/login" class="addpost m-3">login </a>      
+          
+                <a href="/register" class="addpost m-3">register</a>
+            </div>
     <% } %>
     <hr>
     <h1 class="titles">recent posts</h1>
     <% if(postarr.length==0) {%>
         <h2>no post yet</h2>
     <%}%>
+    <section id="post">
+    <div class="container">
+        <div class=" row">
+            <% for (i=0;i<3;i++) { %>
+            <div class="col-md-4">
     <% for(let post of postarr) { %>
     <div class="card">
-        
-        <h3 class="post_title"><%= post.title %></h3>
-        <p><%= post.userId.email %></p>
-        <hr>
+            <div class="card-header">
+                <p><%= post.userId.email %></p>
+              
+            </div>
+        <div class="card-body">
+            <h5 class="post_title">
+                <%= post.title %></h5>
+                <p><%= post.description.substr(0,200) %>...</p>
         <a href="/post/<%= post._id %>" class="btn">seemore</a>
-
+</div>
     </div>
     <% } %>
+</div>
+<% } %>
+</div>
+</div>
+</section>
 </body>
 <%- include("./include/foot") %>
