@@ -10,17 +10,17 @@
     <h1 class="titles">CREATE A NEW ACCOUNT</h1>
     <form action="/register" method="post" class="formbox">
         <input hidden value="<%= csrfToken %>" name="_csrf">
-        <% if(err.length) { %>
+        <% if(err) { %>
             <p class="errormsg"><%= err %></p>
         <% } %>
         <div class="filldata">
     <label for="email">email</label>
-        <input  id="email" type="text" name="email">
+        <input  id="email" type="text" name="email" value="<%= oldformData.email %>">
     </div>
     <div class="filldata">
         <label for="password">password
         </label>
-            <input  id="password" type="text" name="password">
+            <input  id="password" type="text" name="password" value="<%= oldformData.password %>">
         </div>
     
         <button>register</button>

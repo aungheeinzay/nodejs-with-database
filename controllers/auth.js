@@ -3,10 +3,11 @@ const nodemailer = require("nodemailer");
 const bcrypt =require("bcrypt")
 const env = require("dotenv").config();
 const crypto = require("crypto");
-const { errorMonitor } = require("events");
-const { log } = require("console");
+// const { errorMonitor } = require("events");
+// const { log } = require("console");
 const user = require("../models/user");
 const { resourceUsage } = require("process");
+const {validationResult} = require("express-validator");
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
@@ -16,17 +17,24 @@ const transporter = nodemailer.createTransport({
     }
 })
 exports.getregister = (req,res)=>{
-    res.render("auth/register",{title : "register",err : req.flash("err")});
+    res.render("auth/register",{
+        title : "register",
+        err:"",
+        oldformData:{email:"",password:""}});
 }
 
 exports.postregister = (req,res)=>{
     const {email,password} = req.body;
-    User.findOne({email}).then((user)=>{
-        if(user){
-            req.flash("err","email is already exit");
-            return res.redirect("/register");
-        }
-        return bcrypt.hash(password,10).then((hashPassword)=>{
+
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(422).render("auth/register",{
+            title : "register",
+            err :errors.array()[0].msg,
+            oldformData:{email,password}
+        });
+    }  
+     bcrypt.hash(password,10).then((hashPassword)=>{
         return User.create({
                 email,
                 password:hashPassword,
@@ -44,7 +52,7 @@ exports.postregister = (req,res)=>{
                         `
             },(err=>console.log(err)))
         })
-    }).catch(err=>console.log(err))
+   .catch(err=>console.log(err))
 }
 
 exports.getlogin = (req,res)=>{
@@ -55,15 +63,33 @@ exports.getlogin = (req,res)=>{
     else{
         message=null;
     }
-    res.render("auth/login",{title : "login",errormsg : message});
+    res.render("auth/login",{
+        title : "login",
+        errormsg : message,
+        oldformData:{email:"",password:""}
+    });
 }
 //handle login
 exports.postlogin = (req,res)=>{
     const {email,password} = req.body;
+    
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(422).render("auth/login",{
+            title : "login",
+            err :errors.array()[0].msg,
+            oldformData:{email,password}
+        });
+    }
     User.findOne({email}).then((user)=>{
         if(!user){
-            req.flash("erroruser","something wrong and try agin");
-            return res.redirect("/login")
+            // req.flash("erroruser","something wrong and try agin");
+            // return res.redirect("/login")
+            return res.status(422).render("auth/login",{
+                title : "login",
+                err :"check your email and password",
+                oldformData:{email,password}
+            });
         }
         bcrypt
         .compare(password, user.password)
@@ -77,7 +103,11 @@ exports.postlogin = (req,res)=>{
                 })
                
             }
-            res.redirect("/login")
+            return res.status(422).render("auth/login",{
+                title : "login",
+                err :"check your email and password",
+                oldformData:{email,password}
+            });
         })
         .catch(err=>console.log(err));
     })
@@ -152,7 +182,6 @@ exports.resetlink=(req,res)=>{
 //change password
 exports.getNewPassword = (req,res)=>{
     const {token} = req.params;
-    console.log(token);
     User.findOne({
         resetToken : token,
         tokenExpiration : {$gt :Date.now()}}).then((user)=>{
@@ -168,7 +197,8 @@ exports.getNewPassword = (req,res)=>{
                 title:"chanePassword",
                 errormsg:message,
                 token,
-                user_id:user._id.toString()
+                user_id:user._id.toString(),
+                oldformData:{password:"",conform_password:""}
             })
         }).catch(err=>console.log(err));
    
@@ -177,6 +207,16 @@ exports.getNewPassword = (req,res)=>{
 //change password
 exports.changeRealPassword = (req,res)=>{
     const{password,conform_password,token,user_id}=req.body;
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        return res.status(422).render("auth/newPassword",{
+            title : "changePassword",
+            err :errors.array()[0].msg,
+            token,
+            user_id,
+            oldformData:{password,conform_password}
+        });
+    }
     let resultuser;
     User.findOne({resetToken:token,tokenExpiration:{$gt : Date.now()},_id:user_id})
     .then((user)=>{
@@ -184,12 +224,13 @@ exports.changeRealPassword = (req,res)=>{
         if(password===conform_password){
             return bcrypt.hash(password,10);
         }
+
     }).then((hashPassword)=>{
         resultuser.password = hashPassword;
         resultuser.resetToken = undefined;
         tokenExpiration = undefined;
         return resultuser.save();
     }).then(()=>{
-        res.redirect("/login");
+       return res.redirect("/login");
     }).catch(err=>console.log(err))
 }
