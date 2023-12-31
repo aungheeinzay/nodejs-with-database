@@ -1,5 +1,5 @@
 const express = require("express");
-const {check, body}=require("express-validator");
+const {check,body}=require("express-validator");
 const router = express.Router();
 const authcontroller = require("../controllers/auth");
 const User = require("../models/user");
@@ -32,7 +32,10 @@ body("password")
 router.post("/logout",authcontroller.logout)
 router.get("/resetPassword",authcontroller.forgetPassword);
 router.get("/feedback",authcontroller.feedback);
-router.post("/resetPassword",authcontroller.resetlink);
+router.post("/resetPassword",
+body("email")
+.isEmail()
+.withMessage("email is not correct"),authcontroller.resetlink);
 router.get("/newpassword/:token",authcontroller.getNewPassword);
 router.post("/changenewpassword",body("password")
 .trim()

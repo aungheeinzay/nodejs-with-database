@@ -12,14 +12,14 @@
     <form action="/resetPassword" method="post" class="formbox">
         <input hidden value="<%= csrfToken %>" name="_csrf">
 
-        <% if(errormsg) { %>
-            <p class="errormsg"><%= errormsg %></p>
+        <% if(err) { %>
+            <p class="errormsg"><%= err %></p>
             <% } %>
 
 
         <div class="filldata">
     <label for="email">email</label>
-        <input  id="email" type="text" name="email">
+        <input  id="email" type="text" name="email" value="<%= oldformData.email %>">
     </div>
         <button>Reset password</button>
     </form>

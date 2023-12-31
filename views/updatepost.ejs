@@ -9,16 +9,19 @@
 <body>
     <h1 class="titles">UPDATE POST</h1>
     <form action="/admin/updatepost" method="post" class="formbox">
-        <input type="text" name="postid" value="<%= post._id %>" hidden>
+        <% if(error) { %>
+            <p class="errormsg"><%= error %></p>
+            <% } %>
+        <input type="text" name="postid" value="<%= isValidationfail ?  postid : post._id %>" hidden>
         <div class="filldata">
     <label for="title">Title</label>
-        <input  id="title" type="text" name="title" value="<%= post.title %>">
+        <input  id="title" type="text" name="title" value="<%= isValidationfail ? oldformdata.title : post.title %>">
     </div>
 <div class="filldata">
     <input hidden value="<%= csrfToken %>" name="_csrf">
         <label for="description">Description</label>
         <textarea name="description" id="description" cols="30" rows="10">
-            <%= post.description %>
+            <%= isValidationfail ? oldformdata.description : post.description %>
         </textarea>
     </div>
     <div class="filldata">

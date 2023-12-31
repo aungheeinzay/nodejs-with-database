@@ -57,15 +57,10 @@ exports.postregister = (req,res)=>{
 
 exports.getlogin = (req,res)=>{
     let message = req.flash("erroruser");
-    if(message.length>0){
-        message = message[0];
-    }
-    else{
-        message=null;
-    }
+   
     res.render("auth/login",{
         title : "login",
-        errormsg : message,
+        err:"",
         oldformData:{email:"",password:""}
     });
 }
@@ -135,19 +130,31 @@ exports.forgetPassword = (req,res)=>{
     }
     res.render("auth/reset",{
         title : "reset_passwod" ,
-        errormsg : message});
+        err :"",
+        oldformData:""
+    });
 };
 
 //renderffebackpage
 exports.feedback = (req,res)=>{
     res.render("auth/feedback",{
-        title : "feedback" ,});
+        title : "feedback" ,
+    });
 };
 
 
 //resultpassword link send
 exports.resetlink=(req,res)=>{
     const {email} = req.body;
+    const err = validationResult(req);
+    if(!err.isEmpty()){
+        return res.status(422).render("auth/reset",
+        {
+            title:"resetPassword",
+            err :err.array()[0].msg,
+            oldformData:email
+        })
+    }
     crypto.randomBytes(30,(err,buffer)=>{
         if(err){
             console.log(err);
@@ -156,8 +163,11 @@ exports.resetlink=(req,res)=>{
         const token = buffer.toString("hex");
         User.findOne({email}).then((user)=>{
             if(!user){
-                req.flash("error","this email isn't exist");
-                return res.redirect("/resetPassword");
+                return res.status(422).render("auth/reset",{
+                    title:"resetPassword",
+                    err:"account not exist",
+                    oldformData:email
+                })
             }
             user.resetToken = token;
             user.tokenExpiration = Date.now()+180000;
@@ -197,7 +207,7 @@ exports.getNewPassword = (req,res)=>{
                 title:"chanePassword",
                 errormsg:message,
                 token,
-                user_id:user._id.toString(),
+                user_id:user._id,
                 oldformData:{password:"",conform_password:""}
             })
         }).catch(err=>console.log(err));
@@ -211,7 +221,7 @@ exports.changeRealPassword = (req,res)=>{
     if(!errors.isEmpty()){
         return res.status(422).render("auth/newPassword",{
             title : "changePassword",
-            err :errors.array()[0].msg,
+            errormsg :errors.array()[0].msg,
             token,
             user_id,
             oldformData:{password,conform_password}

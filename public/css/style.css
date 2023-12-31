@@ -90,13 +90,21 @@
     margin: 40px;
     text-decoration: none;
 }
+.container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+}
 .card{
     border: 1px solid #2e2e2e;
     background-color: #494949;
     color: #fff;
+    width: 400px;
     border-radius: 5px;
     padding: 10px 10px;
     margin: 20px 10px;
+    max-height: 300px;
+
 
 }
 .post_title{
@@ -120,10 +128,25 @@
     text-decoration: none;
     border-radius: 5px;
 }
+.deletebtn,.editbtn{
+    display: block;
+    background-color: #161616;
+    width: 130px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    color: whitesmoke;
+    border: none;
+    
+}
+.deletebtn:hover,.editbtn:hover{
+    background-color: #494949;
+}
 .dform{
     width: 100%;
 }
-.delete,.logout{
+.logout{
     display: block;
     background-color: #2e2e2e;
     color: white;
@@ -153,9 +176,29 @@
     color: rgb(41, 41, 255);
     text-align: center;
 }
+.detailuser,.detailtime{
+    font-weight: 800;
+    font-size: 20px;
+    margin: 10px;
+}
+.detailuser > span,.detailtime > span{
+    font-size: 14px;
+    color: #282828;
+}
 @media(max-width:992px){
     .addpost{
         font-size: 15px;
         width: 150px;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .card{
+        width: 320px;
+    }
+    .deletebtn,.editbtn{
+        width: 100px;
     }
 }

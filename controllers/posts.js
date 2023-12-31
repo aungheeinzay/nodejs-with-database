@@ -1,9 +1,20 @@
 
 const Post =require("../models/posts");
-
+const {validationResult} =require("express-validator");
+const { format } = require("date-fns");
+// formatISO9075
 
 exports.createpost = (req,res)=>{
     const {title,description} = req.body;
+    const error = validationResult(req);
+    if(!error.isEmpty()){
+        return res.status(422).render("addpost",{
+            title:"post create mal",
+            error:error.array()[0].msg,
+            oldformdata:{title,description}
+
+        })
+    }
     Post.create({
         title,
         description,
@@ -16,11 +27,15 @@ exports.createpost = (req,res)=>{
     ).catch(err=>console.log(err));
 }
 exports.rendercreatepage = (req,res)=>{
-    res.render("addpost",{title:"post create mal"});
+    res.render("addpost",{
+        title:"post create mal",
+        error:"",
+        oldformdata:{title:"",description:""}
+    });
 }
 exports.renderhomepage=(req,res)=>{
     Post.find().select("title description")
-    .populate("userId", "email").sort({title: -1}).then((posts)=>{
+    .populate("userId", "email").sort({createdAt: -1}).then((posts)=>{
         res.render("home",{
             title:"hello word",
             postarr:posts,
@@ -33,10 +48,13 @@ exports.renderhomepage=(req,res)=>{
  exports.renderdetials=(req,res)=>{
     const postid =req.params.postId;
     console.log("render detail"+req.user);
-    Post.findById(postid).then((post)=>{
+    Post.findById(postid).populate("userId","email").then((post)=>{
+        console.log(post)
           res.render("details",{
             title:`${post.title}`,
             post,
+            // date:post.createdAt ? format(post.createdAt, { representation: 'date' }) : "",
+            date:post.createdAt ? format(post.createdAt,"h ':' mm aaa") : "",
             currentUserId:req.user ? req.user._id : ""
 
         });
@@ -48,7 +66,12 @@ exports.renderhomepage=(req,res)=>{
     Post.findById(postid).then((post)=>{
         res.render("updatepost",{
             title :`${post.title}`,
-            post
+            post,
+            postid,
+            error:"",
+            oldformdata:{title:"",description:""},
+            isValidationfail:false
+        
         })
     }
       
@@ -57,6 +80,17 @@ exports.renderhomepage=(req,res)=>{
 
  exports.updatePost = (req,res)=>{
     const{postid,title,description}= req.body;
+    const error = validationResult(req);
+    if(!error.isEmpty()){
+        return res.status(422).render("updatepost",{
+            title:"updatepost",
+            postid,
+            error:error.array()[0].msg,
+            oldformdata:{title,description,postid},
+            isValidationfail:true
+
+        })
+    }
     Post.findById(postid).then((post)=>{
         if(post.userId.toString() !== req.user._id.toString()){
             return res.redirect("/");

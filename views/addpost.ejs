@@ -8,15 +8,20 @@
 <link rel="stylesheet" href="/css/style.css">
 <body>
     <h1 class="titles">ADD A NEW POST</h1>
-    <form action="/admin" method="post" class="formbox">
+    <form action="/admin" method="post" class="formbox container">
         <input hidden value="<%= csrfToken %>" name="_csrf">
+        <% if(error) { %>
+            <div class="filldata">
+                <p class="errormsg"><%= error %></p>
+            </div>
+            <% } %>
         <div class="filldata">
     <label for="title">Title</label>
-        <input  id="title" type="text" name="title">
+        <input  id="title" type="text" name="title" value="<%= oldformdata.title %>">
     </div>
 <div class="filldata">
         <label for="description">Description</label>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        <textarea name="description" id="description" cols="30" rows="10"><%= oldformdata.description %></textarea>
     </div>
     <div class="filldata">
         <label for="photo">photo</label>

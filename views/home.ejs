@@ -28,16 +28,12 @@
     <% if(postarr.length==0) {%>
         <h2>no post yet</h2>
     <%}%>
-    <section id="post">
-    <div class="container">
-        <div class=" row">
-            <% for (i=0;i<3;i++) { %>
-            <div class="col-md-4">
-    <% for(let post of postarr) { %>
+    <section id="post" class="container">
+  
+                <% for(let post of postarr) { %>  
     <div class="card">
             <div class="card-header">
                 <p><%= post.userId.email %></p>
-              
             </div>
         <div class="card-body">
             <h5 class="post_title">
@@ -47,10 +43,7 @@
 </div>
     </div>
     <% } %>
-</div>
-<% } %>
-</div>
-</div>
+
 </section>
 </body>
 <%- include("./include/foot") %>

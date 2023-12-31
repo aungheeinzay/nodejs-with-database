@@ -1,7 +1,7 @@
 const express =require("express");
 const path = require("path");
 const bp = require("body-parser");
-const mongoose = require("mongoose");
+const mongoose =require("mongoose")
 const dotenv =require("dotenv").config();
 const session = require("express-session");
 const mongostore = require("connect-mongodb-session")(session);

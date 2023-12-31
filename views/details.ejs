@@ -2,24 +2,28 @@
 <body>
     <h1 class="titles"> detials page</h1>
    <hr>
-   
-    <div class="card">
+   <p class="detailuser">post by => <span><%= post.userId.email %></span></p>
+   <p class="detailtime">post at => <span><%= date %> </span></p>
+   <div class="d-flex justify-content-center flex-column align-items-center m-2">
+    <div class="card col-lg-12 w-100">
         
         <h3 class="post_title"><%= post.title %></h3>
         <hr>
         <p><%= post.description %></p>
     </div>
+
     <hr>
-    <% if(currentUserId.toString() === post.userId.toString()) { %>
-    <div class="mgbtncontainer">
-        <form  class="dform" method="post" action="/admin/post/<%= post._id %>">
+    <% if(currentUserId.toString() === post.userId._id.toString()) { %>
+    <div class="mgbtncontainer d-flex w-100 flex-row justify-content-between">
+        <form  class="" method="post" action="/admin/post/<%= post._id %>">
             <input hidden value="<%= csrfToken %>" name="_csrf">
-          <button  class=" delete"> delete</button>
+          <button  class=" deletebtn"> delete</button>
         </form>
        
-        <a href="/admin/updatepost/<%= post._id %>" class="mgbtn">edit</a>
+        <a href="/admin/updatepost/<%= post._id %>" class="editbtn">edit</a>
+        <a href="/" class="editbtn">back</a>
     </div>
     <% } %>
-   
+</div>
 </body>
 <%- include("./include/foot") %>
