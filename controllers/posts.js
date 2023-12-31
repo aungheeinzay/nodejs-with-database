@@ -4,7 +4,7 @@ const {validationResult} =require("express-validator");
 const { format } = require("date-fns");
 // formatISO9075
 
-exports.createpost = (req,res)=>{
+exports.createpost = (req,res,next)=>{
     const {title,description} = req.body;
     const error = validationResult(req);
     if(!error.isEmpty()){
@@ -24,7 +24,11 @@ exports.createpost = (req,res)=>{
             console.log(result);
             res.redirect("/");
         }
-    ).catch(err=>console.log(err));
+    ).catch(err=>{
+        console.log(err);
+        const error = new Error("error occour")
+        return next(error);
+    });
 }
 exports.rendercreatepage = (req,res)=>{
     res.render("addpost",{
@@ -33,7 +37,7 @@ exports.rendercreatepage = (req,res)=>{
         oldformdata:{title:"",description:""}
     });
 }
-exports.renderhomepage=(req,res)=>{
+exports.renderhomepage=(req,res,next)=>{
     Post.find().select("title description")
     .populate("userId", "email").sort({createdAt: -1}).then((posts)=>{
         res.render("home",{
@@ -41,11 +45,15 @@ exports.renderhomepage=(req,res)=>{
             postarr:posts,
             currentUserEmail:req.session.userinfo ? req.session.userinfo.email : null
         });
-    }).catch(err=>console.log(err));
+    }).catch(err=> {
+        console.log(err);
+        const error = new Error("post not found")
+        return next(error);
+    });
         
    
  };
- exports.renderdetials=(req,res)=>{
+ exports.renderdetials=(req,res,next)=>{
     const postid =req.params.postId;
     console.log("render detail"+req.user);
     Post.findById(postid).populate("userId","email").then((post)=>{
@@ -54,11 +62,15 @@ exports.renderhomepage=(req,res)=>{
             title:`${post.title}`,
             post,
             // date:post.createdAt ? format(post.createdAt, { representation: 'date' }) : "",
-            date:post.createdAt ? format(post.createdAt,"h ':' mm aaa") : "",
+            date:post.createdAt ? format(post.createdAt,"h ':' mm  aaa") : "",
             currentUserId:req.user ? req.user._id : ""
 
         });
-    }).catch(err=>console.log(err));
+    }).catch(err=>{
+        console.log(err);
+        const error = new Error("post not found")
+        return next(error);
+    });
  }
 
  exports.editPost =(req,res)=>{
@@ -75,7 +87,11 @@ exports.renderhomepage=(req,res)=>{
         })
     }
       
-    ).catch(err=>console.log(err));
+    ).catch(err=>{
+        console.log(err);
+        const error = new Error("post not found")
+        return next(error);
+    });
  }
 
  exports.updatePost = (req,res)=>{

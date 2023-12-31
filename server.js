@@ -14,6 +14,7 @@ app.set("views","views");
 const postrouter = require("./routes/posts.js");
 const adminrouter=require("./routes/admin.js");
 const authrouter = require("./routes/auth.js");
+const errorcontroller= require("./controllers/error.js")
 const User =require("./models/user.js");
 const {islogin} = require("./middleware/login.js");
 
@@ -62,6 +63,9 @@ app.use((req,res,next)=>{
 app.use(postrouter);
 app.use("/admin",islogin,adminrouter);
 app.use(authrouter);
+
+app.all("*",errorcontroller.errorpage);
+app.use(errorcontroller.detailerror);
 
 mongoose.connect(process.env.MONGODB_URL).then(()=>{
     console.log("connected to mongoose");
