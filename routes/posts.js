@@ -9,4 +9,5 @@ router.get("/post/:postId",postcontroller.renderdetials);
 // router.get("/post",(req,res)=>{
 //      res.sendFile(path.join(__dirname,"..","views","postpage.html"))
 //  });
+router.get("/save/:id",postcontroller.saveaspdf);
  module.exports=router;

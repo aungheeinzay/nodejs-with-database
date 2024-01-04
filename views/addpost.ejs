@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css">
 <body>
     <h1 class="titles">ADD A NEW POST</h1>
-    <form action="/admin" method="post" class="formbox container">
+    <form action="/admin" method="post" class="formbox container" enctype="multipart/form-data">
         <input hidden value="<%= csrfToken %>" name="_csrf">
         <% if(error) { %>
             <div class="filldata">

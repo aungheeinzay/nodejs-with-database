@@ -4,14 +4,15 @@
    <hr>
    <p class="detailuser">post by => <span><%= post.userId.email %></span></p>
    <p class="detailtime">post at => <span><%= date %> </span></p>
+   <a href="/save/<%= post._id %>" class="editbtn">save</a>
    <div class="d-flex justify-content-center flex-column align-items-center m-2">
-    <div class="card col-lg-12 w-100">
-        
-        <h3 class="post_title"><%= post.title %></h3>
-        <hr>
-        <p><%= post.description %></p>
-    </div>
-
+    <div class="card ">
+        <img class="card-img-top rounded-1" src="<%= '/' + post.photo %>" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= post.title %></h5>
+          <p class="card-text"><%= post.description %></p>
+        </div>
+      </div>
     <hr>
     <% if(currentUserId.toString() === post.userId._id.toString()) { %>
     <div class="mgbtncontainer d-flex w-100 flex-row justify-content-between">

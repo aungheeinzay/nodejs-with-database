@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css">
 <body>
     <h1 class="titles">UPDATE POST</h1>
-    <form action="/admin/updatepost" method="post" class="formbox">
+    <form action="/admin/updatepost" method="post" class="formbox" enctype="multipart/form-data">
         <% if(error) { %>
             <p class="errormsg"><%= error %></p>
             <% } %>

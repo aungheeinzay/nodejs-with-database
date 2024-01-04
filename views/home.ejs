@@ -31,19 +31,33 @@
     <section id="post" class="container">
   
                 <% for(let post of postarr) { %>  
-    <div class="card">
-            <div class="card-header">
-                <p><%= post.userId.email %></p>
-            </div>
-        <div class="card-body">
-            <h5 class="post_title">
-                <%= post.title %></h5>
-                <p><%= post.description.substr(0,200) %>...</p>
-        <a href="/post/<%= post._id %>" class="btn">seemore</a>
-</div>
     </div>
+    <div class="card">
+        <h5 class="card-header"><%= post.userId.email %></h5>
+        <div class="card-body">
+          <h5 class="card-title"><%= post.title %></h5>
+          <p class="card-text"><%= post.description.substr(0,200) %>...</p>
+          <a href="/post/<%= post._id %>" class="btn btn-info">seemore</a>
+        </div>
+      </div>
     <% } %>
 
 </section>
+<hr>
+<div>
+    <% if(hasNextPage && currentPage == 1) { %>
+        <a class="btn" href="/?page=2">Next</a>
+        <% } %>
+    <% if(hasNextPage && nextPage > 2) { %>
+        <div class="container d-flex flex-row flex-nowrap justify-content-lg-between justify-content-md-center justify-content-sm-center">
+            <a class="btn" href="/?page=<%= previousPage %>">previous</a>
+            <a class="btn" href="/?page=<%= nextPage %>">Next</a>
+        </div>
+        <% } %>
+    <% if(!hasNextPage) { %>
+        <a class="btn" href="/?page=<%= previousPage %>">previous</a>
+        <% } %>
+
+</div>
 </body>
 <%- include("./include/foot") %>

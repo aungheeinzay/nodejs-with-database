@@ -10,6 +10,7 @@ const Productschema =new Schema({
         type :String,
         required :true
     },
+    photo:String,
     userId:{
         type : Schema.Types.ObjectId,
         ref : "User",
